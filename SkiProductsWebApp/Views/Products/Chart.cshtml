@@ -1,0 +1,24 @@
+﻿@model IEnumerable<SkiProductsWebApp.Models.Product>
+
+@{
+    ViewBag.Title = "Chart";
+}
+
+<h2>Chart</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+    <div class="col-md-3">
+        <div>
+            <img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" style="width:100px; height:110px;" alt="Alternate Text" />
+        </div>
+        @Html.DisplayFor(modelItem => item.Name)
+        <p>
+           Cena: @Html.DisplayFor(modelItem => item.Price)
+        </p>
+    </div>
+    }
+</div>
+
+

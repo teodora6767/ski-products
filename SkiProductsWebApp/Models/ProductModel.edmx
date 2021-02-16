@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SkiProductsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Company_id" />
+          </Key>
+          <Property Name="Company_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" />
+          <Property Name="Description" Type="nchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="CompanyBrands">
+          <Key>
+            <PropertyRef Name="Brand_id" />
+          </Key>
+          <Property Name="Brand_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Brand_name" Type="nchar" MaxLength="200" />
+          <Property Name="Details" Type="nchar" MaxLength="500" />
+          <Property Name="Company_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Order_id" />
+          </Key>
+          <Property Name="Order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_id" Type="int" />
+          <Property Name="Person_id" Type="int" />
+          <Property Name="Order_quantity" Type="int" />
+          <Property Name="Order_num" Type="int" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="200" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Image" Type="nchar" MaxLength="100" />
+          <Property Name="Description" Type="nchar" MaxLength="500" />
+          <Property Name="Brand_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" />
+          <Property Name="Username" Type="nchar" MaxLength="100" />
+          <Property Name="Password" Type="nchar" MaxLength="50" />
+          <Property Name="Email" Type="nchar" MaxLength="50" />
+          <Property Name="Role_id" Type="int" />
+        </EntityType>
+        <Association Name="FK__CompanyBr__Compa__2B0A656D">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="CompanyBrands" Type="Self.CompanyBrands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Company_id" />
+            </Principal>
+            <Dependent Role="CompanyBrands">
+              <PropertyRef Name="Company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__Person_id__634EBE90">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__Product_i__625A9A57">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__Brand___4D5F7D71">
+          <End Role="CompanyBrands" Type="Self.CompanyBrands" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyBrands">
+              <PropertyRef Name="Brand_id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Brand_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SkiProductsModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyBrands" EntityType="Self.CompanyBrands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CompanyBr__Compa__2B0A656D" Association="Self.FK__CompanyBr__Compa__2B0A656D">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CompanyBrands" EntitySet="CompanyBrands" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__Person_id__634EBE90" Association="Self.FK__Order__Person_id__634EBE90">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__Product_i__625A9A57" Association="Self.FK__Order__Product_i__625A9A57">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__Brand___4D5F7D71" Association="Self.FK__Products__Brand___4D5F7D71">
+            <End Role="CompanyBrands" EntitySet="CompanyBrands" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SkiProductsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+          <Property Name="Brand_id" Type="Int32" />
+          <NavigationProperty Name="CompanyBrand" Relationship="SkiProductsModel.FK__Products__Brand___4D5F7D71" FromRole="Product" ToRole="CompanyBrand" />
+          <NavigationProperty Name="Orders" Relationship="SkiProductsModel.FK__Order__Product_i__160F4887" FromRole="Product" ToRole="Order" />
+        </EntityType>
+        <EntityContainer Name="SkiProductsEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Users" EntityType="SkiProductsModel.User" />
+          <EntitySet Name="Companies" EntityType="SkiProductsModel.Company" />
+          <EntitySet Name="CompanyBrands" EntityType="SkiProductsModel.CompanyBrand" />
+          <AssociationSet Name="FK__CompanyBr__Compa__2B0A656D" Association="SkiProductsModel.FK__CompanyBr__Compa__2B0A656D">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="CompanyBrand" EntitySet="CompanyBrands" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__Brand___4D5F7D71" Association="SkiProductsModel.FK__Products__Brand___4D5F7D71">
+            <End Role="CompanyBrand" EntitySet="CompanyBrands" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="SkiProductsModel.Order" />
+          <AssociationSet Name="FK__Order__Person_id__17036CC0" Association="SkiProductsModel.FK__Order__Person_id__17036CC0">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__Product_i__160F4887" Association="SkiProductsModel.FK__Order__Product_i__160F4887">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Role_id" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="SkiProductsModel.FK__Order__Person_id__17036CC0" FromRole="User" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Company_id" />
+          </Key>
+          <Property Name="Company_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="400" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="CompanyBrands" Relationship="SkiProductsModel.FK__CompanyBr__Compa__2B0A656D" FromRole="Company" ToRole="CompanyBrand" />
+        </EntityType>
+        <EntityType Name="CompanyBrand">
+          <Key>
+            <PropertyRef Name="Brand_id" />
+          </Key>
+          <Property Name="Brand_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Brand_name" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Details" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+          <Property Name="Company_id" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="SkiProductsModel.FK__CompanyBr__Compa__2B0A656D" FromRole="CompanyBrand" ToRole="Company" />
+          <NavigationProperty Name="Products" Relationship="SkiProductsModel.FK__Products__Brand___4D5F7D71" FromRole="CompanyBrand" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__CompanyBr__Compa__2B0A656D">
+          <End Type="SkiProductsModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="SkiProductsModel.CompanyBrand" Role="CompanyBrand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Company_id" />
+            </Principal>
+            <Dependent Role="CompanyBrand">
+              <PropertyRef Name="Company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__Brand___4D5F7D71">
+          <End Type="SkiProductsModel.CompanyBrand" Role="CompanyBrand" Multiplicity="0..1" />
+          <End Type="SkiProductsModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyBrand">
+              <PropertyRef Name="Brand_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Brand_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Order_id" />
+          </Key>
+          <Property Name="Order_id" Type="Int32" Nullable="false" />
+          <Property Name="Product_id" Type="Int32" />
+          <Property Name="Person_id" Type="Int32" />
+          <Property Name="Order_quantity" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="SkiProductsModel.FK__Order__Person_id__17036CC0" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="Product" Relationship="SkiProductsModel.FK__Order__Product_i__160F4887" FromRole="Order" ToRole="Product" />
+          <Property Name="Order_num" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__Order__Person_id__17036CC0">
+          <End Type="SkiProductsModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="SkiProductsModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__Product_i__160F4887">
+          <End Type="SkiProductsModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="SkiProductsModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SkiProductsModelStoreContainer" CdmEntityContainer="SkiProductsEntities1">
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="SkiProductsModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Brand_id" ColumnName="Brand_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SkiProductsModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="SkiProductsModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Company_id" ColumnName="Company_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyBrands">
+            <EntityTypeMapping TypeName="SkiProductsModel.CompanyBrand">
+              <MappingFragment StoreEntitySet="CompanyBrands">
+                <ScalarProperty Name="Company_id" ColumnName="Company_id" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Brand_name" ColumnName="Brand_name" />
+                <ScalarProperty Name="Brand_id" ColumnName="Brand_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="SkiProductsModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Order_num" ColumnName="Order_num" />
+                <ScalarProperty Name="Order_quantity" ColumnName="Order_quantity" />
+                <ScalarProperty Name="Person_id" ColumnName="Person_id" />
+                <ScalarProperty Name="Product_id" ColumnName="Product_id" />
+                <ScalarProperty Name="Order_id" ColumnName="Order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

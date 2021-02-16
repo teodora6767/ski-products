@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SkiProductsWebApp.Models.Product>
+
+@{
+    ViewBag.Title = "Skiing";
+}
+
+<h2>Skiing</h2>
+
+
+<div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div>
+                    @Html.DisplayFor(modelItem => item.CompanyBrand.Brand_name)
+                </div>
+                <div>
+                    <img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" style="width:250px; height:300px;" alt="Alternate Text" />
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </div>
+           
+                <div>
+                    @using (Html.BeginForm("Order", "Products", FormMethod.Post))
+                    {
+                        <form>
+                            <div class="form-group">
+                                <input type="hidden" name="product_id" value='@item.Id' class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add to chart</button>
+                        </form>
+                    }
+                </div>
+
+            </div>
+        }
+
+    
+</div>
