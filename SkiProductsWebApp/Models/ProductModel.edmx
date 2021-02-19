@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SkiProductsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Category_id" />
+          </Key>
+          <Property Name="Category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="200" />
+          <Property Name="Description" Type="nchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Company_id" />
@@ -42,6 +50,7 @@
           <Property Name="Image" Type="nchar" MaxLength="100" />
           <Property Name="Description" Type="nchar" MaxLength="500" />
           <Property Name="Brand_id" Type="int" />
+          <Property Name="Category_id" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -102,7 +111,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Products__Catego__756D6ECB">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Category_id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SkiProductsModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyBrands" EntityType="Self.CompanyBrands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
@@ -124,6 +146,10 @@
             <End Role="CompanyBrands" EntitySet="CompanyBrands" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK__Products__Catego__756D6ECB" Association="Self.FK__Products__Catego__756D6ECB">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -141,6 +167,8 @@
           <Property Name="Brand_id" Type="Int32" />
           <NavigationProperty Name="CompanyBrand" Relationship="SkiProductsModel.FK__Products__Brand___4D5F7D71" FromRole="Product" ToRole="CompanyBrand" />
           <NavigationProperty Name="Orders" Relationship="SkiProductsModel.FK__Order__Product_i__160F4887" FromRole="Product" ToRole="Order" />
+          <Property Name="Category_id" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="SkiProductsModel.FK__Products__Catego__756D6ECB" FromRole="Product" ToRole="Category" />
         </EntityType>
         <EntityContainer Name="SkiProductsEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -163,6 +191,11 @@
           <AssociationSet Name="FK__Order__Product_i__160F4887" Association="SkiProductsModel.FK__Order__Product_i__160F4887">
             <End Role="Product" EntitySet="Products" />
             <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="Categories" EntityType="SkiProductsModel.Category" />
+          <AssociationSet Name="FK__Products__Catego__756D6ECB" Association="SkiProductsModel.FK__Products__Catego__756D6ECB">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
@@ -257,6 +290,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Category_id" />
+          </Key>
+          <Property Name="Category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="SkiProductsModel.FK__Products__Catego__756D6ECB" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__Products__Catego__756D6ECB">
+          <End Type="SkiProductsModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="SkiProductsModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Category_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -266,6 +320,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="SkiProductsModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Category_id" ColumnName="Category_id" />
                 <ScalarProperty Name="Brand_id" ColumnName="Brand_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -314,6 +369,15 @@
                 <ScalarProperty Name="Person_id" ColumnName="Person_id" />
                 <ScalarProperty Name="Product_id" ColumnName="Product_id" />
                 <ScalarProperty Name="Order_id" ColumnName="Order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="SkiProductsModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category_id" ColumnName="Category_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

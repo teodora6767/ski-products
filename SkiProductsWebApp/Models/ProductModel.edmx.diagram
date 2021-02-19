@@ -14,6 +14,8 @@
         <EntityTypeShape EntityType="SkiProductsModel.Order" Width="1.5" PointX="5.25" PointY="0.75" />
         <AssociationConnector Association="SkiProductsModel.FK__Order__Person_id__17036CC0" />
         <AssociationConnector Association="SkiProductsModel.FK__Order__Product_i__160F4887" />
+        <EntityTypeShape EntityType="SkiProductsModel.Category" Width="1.5" PointX="3.375" PointY="4.875" />
+        <AssociationConnector Association="SkiProductsModel.FK__Products__Catego__756D6ECB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

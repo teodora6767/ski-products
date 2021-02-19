@@ -23,27 +23,41 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
-                    <li>@Html.ActionLink("O nama", "About", "Home")</li>
                     <li>@Html.ActionLink("Proizvodi", "Skiing", "Products")</li>
+                    <li>@Html.ActionLink("Korpa", "Cart", "Products")</li>
+                    <li>@Html.ActionLink("O nama", "About", "Home")</li>
                     <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Korpa", "Chart", "Products")</li>
                     @*<i class="fas fa-shopping-cart" style="color:white; padding:17px;"></i>*@
-                        @if ((string)Session["role"] == "1")
-                        {
-                            <li><i class="far fa-edit" style="color:white; padding:17px;">@Html.ActionLink("Proizvodi", "Index", "Products")</i></li>
-                            <li><i class="far fa-edit" style="color:white; padding:17px;">@Html.ActionLink("Korisnici", "Index", "Users")</i></li>
-                        }
+                    @if ((string)Session["role"] == "1")
+                    {
+                        <li><i class="far fa-edit" style="color:white; padding:17px;">@Html.ActionLink("Proizvodi", "Index", "Products")</i></li>
+                        <li><i class="far fa-edit" style="color:white; padding:17px;">@Html.ActionLink("Korisnici", "Index", "Users")</i></li>
+                    }
 
-                        @if (Session["role"] != null)
-                        {
-                            <li>@Html.ActionLink("Logout", "Logout", "Users")</li>
-                        }
-                        else
-                        {
-                            <li>@Html.ActionLink("Login", "Login", "Users")</li>
-                        }
+                    @if (Session["role"] != null)
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "Users")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Users")</li>
+                    }
 
+                    @*<li>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    Dropdown Example
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">HTML</a></li>
+                    <li><a href="#">CSS</a></li>
+                    <li><a href="#">JavaScript</a></li>
                 </ul>
+            </div>
+        </li>*@
+                </ul>
+                
             </div>
         </div>
     </div>

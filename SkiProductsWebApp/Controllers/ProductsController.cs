@@ -16,6 +16,7 @@ namespace SkiProductsWebApp.Controllers
         MvcApplication mvc = new MvcApplication();
 
         // GET: Products
+        //[CustomFilter]
         public ActionResult Index()
         {
             return View(db.Products.ToList());
@@ -25,6 +26,29 @@ namespace SkiProductsWebApp.Controllers
         public ActionResult Skiing()
         {
             return View(db.Products.ToList());
+        }
+
+
+        // GET: Products
+        public ActionResult Undercap()
+        {
+            var temp = db.Products.Where(i => i.Category_id == 4).Select(i => i).ToList();
+            return View("Skiing", temp);
+        }
+
+
+        // GET: Products
+        public ActionResult Skiis()
+        {
+            var temp = db.Products.Where(i => i.Category_id == 1).Select(i => i).ToList();
+            return View("Skiing", temp);
+        }
+
+        // GET: Products
+        public ActionResult SkiJacket()
+        {
+            var temp = db.Products.Where(i => i.Category_id == 2).Select(i => i).ToList();
+            return View("Skiing", temp);
         }
 
         // POST: Order
@@ -55,32 +79,63 @@ namespace SkiProductsWebApp.Controllers
 
                 throw;
             }
-            string url = string.Format("/Products/Chart", userid);
+            string url = string.Format("/Products/Cart", userid);
             return Redirect(url);
-            //return View("Chart");
+            //return View("Cart");
         }
 
 
-        // GET: Chart
+        // GET: BrandFilter
+        [HttpPost]
+        public ActionResult Brand(int brand_id)
+        {
+            var temp = db.Products.Where(i => i.Brand_id == brand_id).Select(i => i).ToList();
+            return View("Skiing", temp);
+        }
+
+
+        // GET: Cart
         //int user_id
         [HttpGet]
-        public ActionResult Chart()
+        public ActionResult Cart()
         {
-            List<Product> products = new List<Product>();
+            List<Product2> products = new List<Product2>();
             if (Session["userid"] == null)
             {
                 return View("Message");
             }
             int uid = Convert.ToInt32(Session["userid"]);
-            var chart = db.Orders.Where(i => i.Person_id == uid).Select(i=>i.Product_id).ToList();
-            foreach (var prdt_id in chart)
+            var chart = db.Orders.Where(i => i.Person_id == uid).Select(i=>i).ToList();
+
+            decimal? price=0;
+            foreach (var obj in chart)
             {
-                Product p = new Product();
-                p= db.Products.Where(i => i.Id == prdt_id).Select(i => i).First();
+                Product2 p = new Product2();
+                var temp= db.Products.Where(i => i.Id == obj.Product_id).Select(i => i).First();
+                p.Id = temp.Id;
+                p.Name = temp.Name;
+                p.Price = temp.Price;
+                p.Image = temp.Image;
+                p.Order_id = obj.Order_id;
                 products.Add(p);
+                price = price + p.Price;
             }
+            ViewBag.TotalPrice=price;
             return View(products);
         }
+
+
+        // POST: Products/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult DeleteOrder(int order_id)
+        {
+            Order order = db.Orders.Find(order_id);
+            db.Orders.Remove(order);
+            db.SaveChanges();
+            return RedirectToAction("Cart");
+        }
+
 
 
         // GET: Products/Details/5
@@ -122,6 +177,7 @@ namespace SkiProductsWebApp.Controllers
         }
 
         // GET: Products/Edit/5
+        //[Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)

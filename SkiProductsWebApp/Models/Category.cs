@@ -12,25 +12,19 @@ namespace SkiProductsWebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
+        public Category()
         {
-            this.Orders = new HashSet<Order>();
+            this.Products = new HashSet<Product>();
         }
     
-        public int Id { get; set; }
+        public int Category_id { get; set; }
         public string Name { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public string Image { get; set; }
         public string Description { get; set; }
-        public Nullable<int> Brand_id { get; set; }
-        public Nullable<int> Category_id { get; set; }
     
-        public virtual CompanyBrand CompanyBrand { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
-        public virtual Category Category { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

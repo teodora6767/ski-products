@@ -30,5 +30,6 @@ namespace SkiProductsWebApp.Models
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CompanyBrand> CompanyBrands { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Filters;
 using System.Web.Optimization;
 using System.Web.Routing;
 
@@ -29,5 +30,26 @@ namespace SkiProductsWebApp
             HttpContext.Current.Session.Remove("role");
             HttpContext.Current.Session.Remove("userid");
         }
+
     }
+
+    //public class CustomFilter : ActionFilterAttribute, IAuthorizationFilter
+    //{
+    //    public void OnAuthorization(AuthorizationContext filterContext)
+    //    {
+    //        if (Convert.ToString(filterContext.HttpContext.Session["role"]) == "2" || string.IsNullOrEmpty(Convert.ToString(filterContext.HttpContext.Session["role"])))
+    //        {
+    //            filterContext.Result = new RedirectToRouteResult(
+    //           new RouteValueDictionary
+    //           {
+    //                { "controller", "Home" },
+    //                { "action", "Index" }
+    //           });
+    //        }
+            
+    //    }
+
+      
+
+    //}
 }

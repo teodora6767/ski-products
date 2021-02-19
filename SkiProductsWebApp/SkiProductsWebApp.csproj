@@ -134,6 +134,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>ProductModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Company.cs">
       <DependentUpon>ProductModel.tt</DependentUpon>
     </Compile>
@@ -146,6 +149,7 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>ProductModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Product2.cs" />
     <Compile Include="Models\ProductModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,12 +190,18 @@
     <Content Include="Images\fantomkangn.jpg" />
     <Content Include="Images\fischer.jpg" />
     <Content Include="Images\icepak.jpg" />
+    <Content Include="Images\jacket0.jpg" />
     <Content Include="Images\kaciga.jpg" />
     <Content Include="Images\kaciga2.jpg" />
     <Content Include="Images\mckinley.jpeg" />
     <Content Include="Images\salomon.jpg" />
     <Content Include="Images\skiing.jpg" />
     <Content Include="Images\skijakna.jpg" />
+    <Content Include="Images\skijakna2.jpg" />
+    <Content Include="Images\skije0.jpg" />
+    <Content Include="Images\skije2.jpg" />
+    <Content Include="Images\skije3.jpg" />
+    <Content Include="Images\skije4.jpg" />
     <Content Include="Models\ProductModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ProductModel.edmx</DependentUpon>
@@ -250,7 +260,7 @@
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Products\Skiing.cshtml" />
     <Content Include="Views\Products\Message.cshtml" />
-    <Content Include="Views\Products\Chart.cshtml" />
+    <Content Include="Views\Products\Cart.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -4,40 +4,63 @@
     ViewBag.Title = "Skiing";
 }
 
-<h2>Skiing</h2>
-
+<h2>Ski proizvodi</h2>
 
 <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-md-3">
-                <div>
-                    @Html.DisplayFor(modelItem => item.CompanyBrand.Brand_name)
-                </div>
-                <div>
-                    <img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" style="width:250px; height:300px;" alt="Alternate Text" />
-                </div>
-                <div>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </div>
-                <div>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </div>
-           
-                <div>
-                    @using (Html.BeginForm("Order", "Products", FormMethod.Post))
-                    {
-                        <form>
-                            <div class="form-group">
-                                <input type="hidden" name="product_id" value='@item.Id' class="form-control">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Add to chart</button>
-                        </form>
-                    }
-                </div>
-
-            </div>
-        }
-
-    
+    Filter
+    <div>
+       
+            @using (Html.BeginForm("Brand", "Products", FormMethod.Post))
+            {
+                <form>
+                    <div class="form-group">
+                        <select class="form-control" name="brand_id">
+                            <option value='1'>McKinley</option>
+                            <option value='2'>Addidas</option>
+                            <option value='3'>Atomic</option>
+                            <option value='4'>Salomon</option>
+                            <option value='5'>Alpina</option>
+                            <option value='6'>Nike</option>
+                            <option value='7'>Fischer</option>
+                            <option value='8'>NGN</option>
+                            <option value='9'>Quiksilver</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Filtriraj</button>
+                </form>
+            }
+        
+    </div>
 </div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+    <div class="col-md-3">
+        <div>
+            <img src="~/Images/@Html.DisplayFor(modelItem => item.Image)" style="width:250px; height:300px;" alt="Alternate Text" />
+        </div>
+        <div>
+            @Html.DisplayFor(modelItem => item.Name)
+            <p>
+                Brend: @Html.DisplayFor(modelItem => item.CompanyBrand.Brand_name)
+            </p>
+        </div>
+        <div>
+            @Html.DisplayFor(modelItem => item.Price)
+        </div>
+
+        <div>
+            @using (Html.BeginForm("Order", "Products", FormMethod.Post))
+            {
+                <form>
+                    <div class="form-group">
+                        <input type="hidden" name="product_id" value='@item.Id' class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Dodaj u korpu</button>
+                </form>
+            }
+        </div>
+    </div>
+            }
+        </div>
